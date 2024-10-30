@@ -28,19 +28,17 @@ Quan sát thông điệp in ra theo thời gian ta thấy một vài điều th�
 
 **Hình 1**
 
-1. Thư viện PubSubClient có thể gọi hàm publish trước khi thiết lập kết nối thành công với broker
-- **Hình 1** cho thấy: có ba thông điệp được "publish" là 0, 1, 2 trước cả khi MQTT kết nối thành công
-- Sau khi kết nối WiFi thành công, thì `Attempting MQTT connection...` mất khoảng 3s để thiết lập kết nối (mỗi lần publish là 1s).
-
-2. Thông điệp đầu tiên mà ESP32 nhận được từ broker chính là cái `retained message` từ lần thí nghiệm trước (số 99):
-- Xem **Hình 1**
-- Do logic của mã thông thường là sẽ subscribe vào các topic mà client quan tâm ngay sau khi thiết lập kết nối MQTT thành công, ở đây ta đã subscribe vào `echo_topic` cho nên đã nhận được thông điệp "còn sót lại cuối cùng" (retained message) từ broker. 
-
-3. Cơ chế Echo hoạt động bình thường như dự kiến, kể cả với QoS 0:
-- Trên **Hình 1**
-- Điều này không có gì lạ, vì khi mội kết nối được thiết lập thì lớp TCP/IP truyền thông điệp rất tốt 
-- Không quan sát thấy bị mất gói tin lần nào kể cả việc publish và subscribe với QoS = 0. 
-
+Quá trình Kết nối WiFi và Cách Thức Hoạt Động
+Ban đầu, ESP32 tìm cách kết nối với WiFi bằng cách sử dụng tên mạng (SSID) là Binhngungok. Đây là bước đầu tiên và bắt buộc để thiết bị có thể truy cập vào mạng cục bộ và giao tiếp với các thiết bị khác, bao gồm cả MQTT broker.
+Sau khi thực hiện kết nối, ESP32 nhận được địa chỉ IP là 192.168.0.104. Địa chỉ IP này cho phép thiết bị định danh trong mạng và có thể được sử dụng để gửi hoặc nhận dữ liệu từ các thiết bị khác.
+Thời gian Kết nối WiFi So với MQTT
+Có thể thấy rằng việc kết nối WiFi diễn ra nhanh chóng và không có độ trễ rõ ràng trong quá trình này.
+Ngay sau khi kết nối WiFi thành công, thiết bị bắt đầu quá trình kết nối MQTT với broker. Tuy nhiên, thiết lập kết nối MQTT cần thêm thời gian (khoảng 3 giây), vì quá trình này đòi hỏi thêm bước xác thực và thiết lập liên kết với broker.
+Vai trò của WiFi trong Hoạt động của ESP32
+Kết nối WiFi không chỉ là yếu tố tiên quyết để kết nối với MQTT broker mà còn cung cấp kênh truyền tải chính cho mọi giao tiếp của ESP32 trong mạng.
+Vì mạng cục bộ WiFi đảm bảo mức độ ổn định tương đối, các thông điệp MQTT được truyền tải và nhận về từ broker một cách đáng tin cậy, ngay cả khi sử dụng mức QoS thấp nhất (QoS 0). Điều này giúp đơn giản hóa giao thức giao tiếp mà không cần đến việc bảo vệ gói tin ở mức cao hơn.
+Tổng kết
+Nhờ kết nối WiFi ổn định, ESP32 có thể dễ dàng thiết lập kết nối MQTT và hoạt động theo cơ chế Echo một cách mượt mà, không gặp phải hiện tượng mất gói tin. Kết nối WiFi đóng vai trò thiết yếu, tạo nền tảng cho mọi giao tiếp mạng của thiết bị.
 ![Hình 2](./images/hinh2.png "Hình 2")
 **Hình 2**
 
