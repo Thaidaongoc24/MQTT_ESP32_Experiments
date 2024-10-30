@@ -24,7 +24,7 @@
 ## Kết quả
 Quan sát thông điệp in ra theo thời gian ta thấy một vài điều thú vị ngoài dự kiến như sau:
 
-![Hình 1]![image](https://github.com/user-attachments/assets/cab219a2-b919-4259-85e0-d29fa73420b5)
+[image](https://github.com/user-attachments/assets/cab219a2-b919-4259-85e0-d29fa73420b5)
 
 **Hình 1**
 
