@@ -22,22 +22,22 @@
 - Hiểu rõ hơn về cơ chế hoạt động của MQTT client bên trên tầng TCP/IP, nhất là cơ chế phát hiện mất kết nối và khôi phục kết nối ở lớp vật lý, rất hay xảy ra trong thực tế.
 
 ## Kết quả
-Quan sát thông điệp in ra theo thời gian ta thấy một vài điều thú vị ngoài dự kiến như sau:
+Quan sát thông điệp in ra theo thời gian ta thấy một vài điều:
 
 ![Hình 1](https://github.com/user-attachments/assets/cab219a2-b919-4259-85e0-d29fa73420b5)
 
 **Hình 1**
 
-Quá trình Kết nối WiFi và Cách Thức Hoạt Động
-Ban đầu, ESP32 tìm cách kết nối với WiFi bằng cách sử dụng tên mạng (SSID) là Binhngungok. Đây là bước đầu tiên và bắt buộc để thiết bị có thể truy cập vào mạng cục bộ và giao tiếp với các thiết bị khác, bao gồm cả MQTT broker.
-Sau khi thực hiện kết nối, ESP32 nhận được địa chỉ IP là 192.168.0.104. Địa chỉ IP này cho phép thiết bị định danh trong mạng và có thể được sử dụng để gửi hoặc nhận dữ liệu từ các thiết bị khác.
-Thời gian Kết nối WiFi So với MQTT
-Có thể thấy rằng việc kết nối WiFi diễn ra nhanh chóng và không có độ trễ rõ ràng trong quá trình này.
-Ngay sau khi kết nối WiFi thành công, thiết bị bắt đầu quá trình kết nối MQTT với broker. Tuy nhiên, thiết lập kết nối MQTT cần thêm thời gian (khoảng 3 giây), vì quá trình này đòi hỏi thêm bước xác thực và thiết lập liên kết với broker.
-Vai trò của WiFi trong Hoạt động của ESP32
+- Quá trình Kết nối WiFi và Cách Thức Hoạt Động:
+    Ban đầu, ESP32 tìm cách kết nối với WiFi bằng cách sử dụng tên mạng (SSID) là Binhngungok. Đây là bước đầu tiên và bắt buộc để thiết bị có thể truy cập vào mạng cục bộ và giao tiếp với các thiết bị khác, bao gồm cả MQTT broker.
+    Sau khi thực hiện kết nối, ESP32 nhận được địa chỉ IP là 192.168.0.104. Địa chỉ IP này cho phép thiết bị định danh trong mạng và có thể được sử dụng để gửi hoặc nhận dữ liệu từ các thiết bị khác.
+- Thời gian Kết nối WiFi So với MQTT
+    Có thể thấy rằng việc kết nối WiFi diễn ra nhanh chóng và không có độ trễ rõ ràng trong quá trình này.
+    Ngay sau khi kết nối WiFi thành công, thiết bị bắt đầu quá trình kết nối MQTT với broker. Tuy nhiên, thiết lập kết nối MQTT cần thêm thời gian (khoảng 3 giây), vì quá trình này đòi hỏi thêm bước xác thực và thiết lập liên kết với broker.
+- Vai trò của WiFi trong Hoạt động của ESP32
 Kết nối WiFi không chỉ là yếu tố tiên quyết để kết nối với MQTT broker mà còn cung cấp kênh truyền tải chính cho mọi giao tiếp của ESP32 trong mạng.
 Vì mạng cục bộ WiFi đảm bảo mức độ ổn định tương đối, các thông điệp MQTT được truyền tải và nhận về từ broker một cách đáng tin cậy, ngay cả khi sử dụng mức QoS thấp nhất (QoS 0). Điều này giúp đơn giản hóa giao thức giao tiếp mà không cần đến việc bảo vệ gói tin ở mức cao hơn.
-Tổng kết
+## Tổng kết
 Nhờ kết nối WiFi ổn định, ESP32 có thể dễ dàng thiết lập kết nối MQTT và hoạt động theo cơ chế Echo một cách mượt mà, không gặp phải hiện tượng mất gói tin. Kết nối WiFi đóng vai trò thiết yếu, tạo nền tảng cho mọi giao tiếp mạng của thiết bị.
 ![Hình 2](./images/hinh2.png "Hình 2")
 **Hình 2**
