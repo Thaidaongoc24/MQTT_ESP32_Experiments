@@ -24,7 +24,7 @@
 ## Kết quả
 Quan sát thông điệp in ra theo thời gian ta thấy một vài điều thú vị ngoài dự kiến như sau:
 
-![Hình 1](./images/hinh1.png "Hình 1")
+![Hình 1](![image](https://github.com/user-attachments/assets/f87ca189-b80f-48f6-9329-dd928ef1b78b) "Hình 1")
 **Hình 1**
 
 1. Thư viện PubSubClient có thể gọi hàm publish trước khi thiết lập kết nối thành công với broker
