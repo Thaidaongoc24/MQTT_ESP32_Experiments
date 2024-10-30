@@ -22,37 +22,42 @@
 - Hiểu rõ hơn về cơ chế hoạt động của MQTT client bên trên tầng TCP/IP, nhất là cơ chế phát hiện mất kết nối và khôi phục kết nối ở lớp vật lý, rất hay xảy ra trong thực tế.
 
 ## Kết quả
-Quan sát thông điệp in ra theo thời gian ta thấy một vài điều thú vị ngoài dự kiến như sau:
+Quan sát thông điệp in ra theo thời gian ta thấy một vài điều:
 
-![Hình 1](./images/hinh1.png "Hình 1")
+![Hình 1](https://github.com/user-attachments/assets/cab219a2-b919-4259-85e0-d29fa73420b5)
+
 **Hình 1**
 
-1. Thư viện PubSubClient có thể gọi hàm publish trước khi thiết lập kết nối thành công với broker
-- **Hình 1** cho thấy: có ba thông điệp được "publish" là 0, 1, 2 trước cả khi MQTT kết nối thành công
-- Sau khi kết nối WiFi thành công, thì `Attempting MQTT connection...` mất khoảng 3s để thiết lập kết nối (mỗi lần publish là 1s).
+- Quá trình Kết nối WiFi và Cách Thức Hoạt Động:
+    Ban đầu, ESP32 tìm cách kết nối với WiFi bằng cách sử dụng tên mạng (SSID) là Binhngungok. Đây là bước đầu tiên và bắt buộc để thiết bị có thể truy cập vào mạng cục bộ và giao tiếp với các thiết bị khác, bao gồm cả MQTT broker.
+    Sau khi thực hiện kết nối, ESP32 nhận được địa chỉ IP là 192.168.0.104. Địa chỉ IP này cho phép thiết bị định danh trong mạng và có thể được sử dụng để gửi hoặc nhận dữ liệu từ các thiết bị khác.
+- Thời gian Kết nối WiFi So với MQTT:
+    Có thể thấy rằng việc kết nối WiFi diễn ra nhanh chóng và không có độ trễ rõ ràng trong quá trình này.
+    Ngay sau khi kết nối WiFi thành công, thiết bị bắt đầu quá trình kết nối MQTT với broker. Tuy nhiên, thiết lập kết nối MQTT cần thêm thời gian (khoảng 3 giây), vì quá trình này đòi hỏi thêm bước xác thực và thiết lập liên kết với broker.
+- Vai trò của WiFi trong Hoạt động của ESP32:
+Kết nối WiFi không chỉ là yếu tố tiên quyết để kết nối với MQTT broker mà còn cung cấp kênh truyền tải chính cho mọi giao tiếp của ESP32 trong mạng.
+Vì mạng cục bộ WiFi đảm bảo mức độ ổn định tương đối, các thông điệp MQTT được truyền tải và nhận về từ broker một cách đáng tin cậy, ngay cả khi sử dụng mức QoS thấp nhất (QoS 0). Điều này giúp đơn giản hóa giao thức giao tiếp mà không cần đến việc bảo vệ gói tin ở mức cao hơn.
+## Tổng kết
+Nhờ kết nối WiFi ổn định, ESP32 có thể dễ dàng thiết lập kết nối MQTT và hoạt động theo cơ chế Echo một cách mượt mà, không gặp phải hiện tượng mất gói tin. Kết nối WiFi đóng vai trò thiết yếu, tạo nền tảng cho mọi giao tiếp mạng của thiết bị.
 
-2. Thông điệp đầu tiên mà ESP32 nhận được từ broker chính là cái `retained message` từ lần thí nghiệm trước (số 99):
-- Xem **Hình 1**
-- Do logic của mã thông thường là sẽ subscribe vào các topic mà client quan tâm ngay sau khi thiết lập kết nối MQTT thành công, ở đây ta đã subscribe vào `echo_topic` cho nên đã nhận được thông điệp "còn sót lại cuối cùng" (retained message) từ broker. 
 
-3. Cơ chế Echo hoạt động bình thường như dự kiến, kể cả với QoS 0:
-- Trên **Hình 1**
-- Điều này không có gì lạ, vì khi mội kết nối được thiết lập thì lớp TCP/IP truyền thông điệp rất tốt 
-- Không quan sát thấy bị mất gói tin lần nào kể cả việc publish và subscribe với QoS = 0. 
-
-![Hình 2](./images/hinh2.png "Hình 2")
+![Hình 2](![image](https://github.com/user-attachments/assets/456cee1c-1d77-4b62-adea-42424853d7f1)
+)
 **Hình 2**
 
-4. Khi ngắt điểm phát WiFi (AP):
-- **Hình 2** ngắt tín hiệu từ bộ phát WiFi - ví dụ: trên điện thoại, giữa chừng khi ESP32 đang publish thông điệp 26 (xem hình 2).
-- Ngay lập tức ssl_client ở lớp dưới trên con ESP32 báo lỗi (ssl_client.cpp:37 ...)
-- Sau đó thì thư viện PubSubClient vẫn tiếp tục publishing thông điệp 1s mỗi lần, từ 27 tới 41 (đúng 15s).
-- 15s sau thì MQTT Client mới phát hiện ra việc mất kết nối MQTT và tiến hành `mqttReconnect` --> báo lỗi `failed, rc=-2`
-- Tra cứu trên docs của PubSubClient thì thấy lỗi này có nghĩa là: `-2 : MQTT_CONNECT_FAILED - the network connection failed`
-- .. điều này có nghĩa là tới lúc này thì MQTT Client phát hiện ra mất kết nối mạng (sau 15s) và tiến hành kết nối lại.
-- Việc kết nối lại không thành công cho đến khi ta bật điểm phát WiFi lại.
-- Như trên **Hình 3** việc kết nối MQTT khôi phục mất khoảng 3s sau khi kết nối WiFi khôi phục (không in thông điệp kết nối WiFi connected do logic của mã thí nghiệm). 
-- Note: điều này cũng chứng tỏ là thư viện WiFi.h của ESP32 trên Arduino Core nó sẽ tự động xử lý việc kết nối WiFi lại một cách im lặng, không cần người dùng phải viết mã. Nếu muốn bạn có thể tự nghiên cứu kỹ hơn về hiện tượng này bằng mã trong thư mục thí nghiệm "Wifi_Connect_Experiment" cùng trên Repo này. 
+## Khi ngắt điểm phát WiFi (AP):
+- Ngắt kết nối WiFi: Khi ngắt tín hiệu từ bộ phát WiFi (như khi tắt WiFi trên điện thoại), lập tức ssl_client ở lớp dưới của ESP32 báo lỗi, cụ thể là dòng ssl_client.cpp:37 ..., với mã lỗi errno: 118, báo rằng "Host is unreachable". Điều này nghĩa là SSL Client nhận biết ngay khi WiFi bị mất.
+
+- Tiếp tục gửi thông điệp: Dù đã mất kết nối WiFi, thư viện PubSubClient vẫn tiếp tục gửi thông điệp đều đặn mỗi giây, từ thông điệp số 27 đến 41, trong khoảng 15 giây. Điều này cho thấy PubSubClient không nhận biết ngay rằng kết nối đã bị ngắt.
+
+- Phát hiện mất kết nối sau 15 giây: Đúng 15 giây sau khi WiFi bị ngắt, MQTT Client mới nhận ra rằng kết nối MQTT đã mất và bắt đầu thực hiện mqttReconnect. Thông báo lỗi failed, rc=-2 xác nhận rằng lúc này PubSubClient mới phát hiện mạng bị mất.
+
+- Kết nối lại tự động khi có WiFi: Khi mình bật lại điểm phát WiFi, thư viện WiFi.h của ESP32 tự động xử lý việc kết nối lại WiFi mà không cần phải viết thêm mã. Và sau khi WiFi được khôi phục, việc kết nối lại MQTT mất thêm khoảng 3 giây nữa.
+
+Điều này cho thấy:
+
+WiFi.h của ESP32 tự động xử lý việc kết nối lại WiFi một cách âm thầm mà không cần người dùng can thiệp.
+PubSubClient phát hiện mất kết nối với độ trễ 15 giây – có thể đây là thời gian timeout mặc định khi không nhận được phản hồi từ server.
 
 ![Hình 3](./images/hinh3.png "Hình 3")
 **Hình 3**
