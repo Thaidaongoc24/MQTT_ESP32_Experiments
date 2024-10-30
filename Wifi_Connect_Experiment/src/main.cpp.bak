@@ -1,0 +1,20 @@
+#include <Arduino.h>
+#include "wifi_connect.h"
+#include "secrets/wifi.h"
+
+namespace
+{
+    const char *WF_SSID = WiFiSecrets::ssid;
+    const char *WF_PASS = WiFiSecrets::pass;
+}
+
+void setup()
+{
+    Serial.begin(115200);
+    setup_wifi(WF_SSID, WF_PASS);
+}
+
+void loop()
+{
+    // put your main code here, to run repeatedly:
+}
