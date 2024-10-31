@@ -44,7 +44,7 @@ Vì mạng cục bộ WiFi đảm bảo mức độ ổn định tương đối,
 Nhờ kết nối WiFi ổn định, ESP32 có thể dễ dàng thiết lập kết nối MQTT và hoạt động theo cơ chế Echo một cách mượt mà, không gặp phải hiện tượng mất gói tin. Kết nối WiFi đóng vai trò thiết yếu, tạo nền tảng cho mọi giao tiếp mạng của thiết bị.
 
 
-![Hình 2](![image](https://github.com/user-attachments/assets/e8bea639-2d83-495e-9265-b881e7f8a8f6)
+![Hình 2](https://github.com/user-attachments/assets/e8bea639-2d83-495e-9265-b881e7f8a8f6)
 )
 )
 )
