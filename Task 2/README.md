@@ -43,8 +43,7 @@
 2. Kết nối với cổng 8883:
   ![Hình 2](https://github.com/user-attachments/assets/29138f10-f093-4491-a88b-34d82d6f7d16)
   **Hình 2**
-
--Cổng 8883 sử dụng giao thức MQTT over SSL/TLS, đảm bảo tính bảo mật cho dữ liệu truyền tải. Thường được sử dụng trong các ứng dụng yêu cầu bảo mật cao.
+- Cổng 8883 sử dụng giao thức MQTT over SSL/TLS, đảm bảo tính bảo mật cho dữ liệu truyền tải. Thường được sử dụng trong các ứng dụng yêu cầu bảo mật cao.
 - Ở **Hình 2** ta setup các thông tin cơ bản: Name, Host, Port, Username, Password
 - Và setup các chứng chỉ
 - Ưu điểm:
