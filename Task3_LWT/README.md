@@ -1,13 +1,14 @@
 <<<<<<< HEAD
 ## Bố trí thí nghiệm 
 
-- Dùng thư viện PubSubClient trên ESP32 kết nối với một MQTT Broker (trên đám mây hoặc local đều được).
+- Dùng thư viện PubSubClient trên ESP32 kết nối với MQTT Broker HiveMQ.
 - Sử dụng thư viện Ticker, một thư viện chuẩn trong Arduino để gọi hàm publish một cách đều đặn và bất đồng bộ, mỗi giây (1s) một lần:
     + Mã: `mqttPulishTicker.attach(1, mqttPublish)`
     + Tài liệu về Ticker: https://docs.arduino.cc/libraries/ticker/, https://github.com/espressif/arduino-esp32/blob/master/libraries/Ticker/src/Ticker.h 
 - Subscribe tới topic `esp32/echo_test` ngay sau khi MQTT connect thành công
 - Gọi hàm `mqttClient.loop()` trong main loop để handle các thông điệp nhận được từ broker (bất đồng bộ, event driven) bất kỳ lúc nào. 
 - Phát hiện mất kết nối MQTT `if (!mqttClient.connected())` trong main loop để kết nối lại `mqttReconnect()` ngay khi phát hiện mất kết nối.
+- Khi client bị mất kết nối, sau khoảng thời gian 20s sẽ thông báo "Lost Connection" về topic; khi client được kết nối sẽ có thông báo "online"
 
 ## Kịch bản thí nghiệm
 
@@ -22,13 +23,14 @@
 - Quan sát sự bỏ mặc việc mất thông điệp trong QoS = 0. 
 - Hiểu rõ hơn về cơ chế hoạt động của MQTT client bên trên tầng TCP/IP, nhất là cơ chế phát hiện mất kết nối và khôi phục kết nối ở lớp vật lý, rất hay xảy ra trong thực tế.
 
-## Kết quả
-Quan sát thông điệp in ra theo thời gian ta thấy một vài điều:
+## Kết quả:
+1. Thiết lập kết nối với HiveMQ:
+- Sử dụng HiveMQ Web Client để quan sát dữ liệu được gửi đến topic 'esp32/echo_test'
 
-![Hình 1](https://github.com/user-attachments/assets/cab219a2-b919-4259-85e0-d29fa73420b5)
-
+![Hình 1](![image](https://github.com/user-attachments/assets/46012d87-bb58-45cb-a733-4a573d743347)
 **Hình 1**
 
+- Sau khi kết nối, trạng thái của esp sẽ được hiển thị trước khi dữ liệu bắt đầu nhận
 - Quá trình Kết nối WiFi và Cách Thức Hoạt Động:
     Ban đầu, ESP32 tìm cách kết nối với WiFi bằng cách sử dụng tên mạng (SSID) là Binhngungok. Đây là bước đầu tiên và bắt buộc để thiết bị có thể truy cập vào mạng cục bộ và giao tiếp với các thiết bị khác, bao gồm cả MQTT broker.
     Sau khi thực hiện kết nối, ESP32 nhận được địa chỉ IP là 192.168.0.104. Địa chỉ IP này cho phép thiết bị định danh trong mạng và có thể được sử dụng để gửi hoặc nhận dữ liệu từ các thiết bị khác.
