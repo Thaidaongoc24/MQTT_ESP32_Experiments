@@ -63,7 +63,7 @@ Nhờ kết nối WiFi ổn định, ESP32 có thể dễ dàng thiết lập k�
 WiFi.h của ESP32 tự động xử lý việc kết nối lại WiFi một cách âm thầm mà không cần người dùng can thiệp.
 PubSubClient phát hiện mất kết nối với độ trễ 15 giây – có thể đây là thời gian timeout mặc định khi không nhận được phản hồi từ server.
 
-![Hình 3](![image](https://github.com/user-attachments/assets/9278430d-c968-4d3d-9296-558b660ea464 )
+![Hình 3](https://github.com/user-attachments/assets/9278430d-c968-4d3d-9296-558b660ea464)
 )
 **Hình 3**
 
