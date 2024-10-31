@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"name": "Wifi_Connect_Experiment",
+			"path": "."
+		},
+		{
+			"name": "WiFi_Disconnect_QoS0_Publishing",
+			"path": "../WiFi_Disconnect_QoS0_Publishing"
+		}
+	],
+	"settings": {}
+}
