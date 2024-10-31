@@ -44,7 +44,7 @@
 - Kết nối lại và gửi thông báo "online": Ngay khi kết nối mạng được khôi phục, ESP32 sẽ gửi thông điệp "online" đến topic echo_topic. Điều này giúp MQTT broker và các client khác biết rằng thiết bị đã trở lại trạng thái hoạt động.
 - Tiếp tục gửi dữ liệu: Sau khi gửi thông báo "online", ESP32 sẽ bắt đầu tiếp tục gửi các thông điệp dữ liệu như thông thường. Các thông điệp này sẽ được publish lên echo_topic ngay sau thông báo "online".
 
-##Kết luận
+## Kết luận
 - Kết quả thí nghiệm cho thấy Broker HiveMQ hoạt động ổn định và đúng như mong đợi trong việc duy trì trạng thái và đảm bảo tính tin cậy của hệ thống MQTT, đáp ứng tốt nhu cầu giám sát trạng thái trong các ứng dụng IoT.
 - Thí nghiệm đã chứng minh rằng tính năng Last Will and Testament (LWT) của HiveMQ có khả năng giám sát trạng thái của client một cách hiệu quả.
 - Nhờ vào cấu hình keepAlive và socketTimeout, hệ thống có thể cập nhật chính xác trạng thái kết nối của ESP32 (online/offline) trên topic theo thời gian thực, mang lại độ chính xác và ổn định cao trong việc giám sát trạng thái thiết bị.
