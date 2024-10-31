@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 ## Bố trí thí nghiệm 
 
 - Dùng thư viện PubSubClient trên ESP32 kết nối với MQTT Broker HiveMQ.
