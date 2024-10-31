@@ -44,7 +44,8 @@ Vì mạng cục bộ WiFi đảm bảo mức độ ổn định tương đối,
 Nhờ kết nối WiFi ổn định, ESP32 có thể dễ dàng thiết lập kết nối MQTT và hoạt động theo cơ chế Echo một cách mượt mà, không gặp phải hiện tượng mất gói tin. Kết nối WiFi đóng vai trò thiết yếu, tạo nền tảng cho mọi giao tiếp mạng của thiết bị.
 
 
-![Hình 2](https://github.com/user-attachments/assets/0fdec050-cf9b-463d-81d9-3ade43327337)
+![Hình 2](![image](https://github.com/user-attachments/assets/e8bea639-2d83-495e-9265-b881e7f8a8f6)
+)
 )
 )
 **Hình 2**
@@ -63,7 +64,8 @@ Nhờ kết nối WiFi ổn định, ESP32 có thể dễ dàng thiết lập k�
 WiFi.h của ESP32 tự động xử lý việc kết nối lại WiFi một cách âm thầm mà không cần người dùng can thiệp.
 PubSubClient phát hiện mất kết nối với độ trễ 15 giây – có thể đây là thời gian timeout mặc định khi không nhận được phản hồi từ server.
 
-![Hình 3](https://github.com/user-attachments/assets/9278430d-c968-4d3d-9296-558b660ea464)
+![Hình 3](https://github.com/user-attachments/assets/c33bc2d3-4071-40bc-ba89-c6e6fa69c665)
+)
 )
 **Hình 3**
 
